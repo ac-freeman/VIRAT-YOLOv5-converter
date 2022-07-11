@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 
-def convert(source, dest_dir, frame_skip, video, grayscale, prepend):
+def convert(source, dest_dir, frame_skip, video, grayscale, prepend, ignore_zero):
     input = np.loadtxt(source, dtype=int)
 
     # Make the base directory
@@ -54,7 +54,7 @@ def convert(source, dest_dir, frame_skip, video, grayscale, prepend):
     current_frame = frame_skip
     f = make_file(labels_path, current_frame, prepend, pre_name)
     for index, row in df.iterrows():
-        if row['frame'] == current_frame:
+        if row['frame'] == current_frame and row['class'] != 0:
             x_center = (row['bbox_tl_x'] + row['bbox_width']/2) / 1920
             y_center = (row['bbox_tl_y'] + row['bbox_height'] / 2) / 1080
             row_out = [row['class'], x_center, y_center, row['bbox_width']/1920, row['bbox_height']/1080]
@@ -94,6 +94,7 @@ if __name__ == '__main__':
     parser.add_argument('--video', type=str, default='', help='extract and save images from video')
     parser.add_argument('--grayscale', action='store_true', help='convert output images to grayscale')
     parser.add_argument('--prepend', action='store_true', help='prepend filenames with source name')
+    parser.add_argument('--ignore-zero', action='store_true', help='prepend filenames with source name')
 
     opt = parser.parse_args()
     convert(**vars(opt))
