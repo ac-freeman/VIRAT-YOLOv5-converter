@@ -94,7 +94,7 @@ if __name__ == '__main__':
     parser.add_argument('--video', type=str, default='', help='extract and save images from video')
     parser.add_argument('--grayscale', action='store_true', help='convert output images to grayscale')
     parser.add_argument('--prepend', action='store_true', help='prepend filenames with source name')
-    parser.add_argument('--ignore-zero', action='store_true', help='prepend filenames with source name')
+    parser.add_argument('--ignore-zero', action='store_true', help='ignore annotations with class 0')
 
     opt = parser.parse_args()
     convert(**vars(opt))
