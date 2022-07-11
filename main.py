@@ -65,7 +65,7 @@ def convert(source, dest_dir, frame_skip, video, grayscale):
             f.write('\n')
         elif row['frame'] > current_frame:
             if video:
-                cap.set(0, current_frame)
+                cap.set(1, current_frame)
                 ret, frame = cap.read()
                 if grayscale:
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
